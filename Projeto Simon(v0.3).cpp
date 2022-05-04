@@ -4,8 +4,6 @@
 //apos receber o mesmo numero de inputs da sequencia monstrada, adiciona mais 1 cor a sequencia mostrada
 //qualquer um does quatro botoes funciona
 
-// C++ code
-
 #define VM 3
 #define VM_BUT 2
 
