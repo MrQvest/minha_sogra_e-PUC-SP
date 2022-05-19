@@ -1,13 +1,16 @@
+//inclusão de livrarias
 #include <TouchScreen.h>
 #include <Elegoo_GFX.h>
 #include <Elegoo_TFTLCD.h>
 
+//definição de pinos analógicos
 #define LCD_CS A3
 #define LCD_CD A2
 #define LCD_WR A1
 #define LCD_RD A0
 #define LCD_RESET A4
 
+//definição das cores
 #define BLACK   0x0000
 #define BLUE    0x001F
 #define RED     0xF800
@@ -17,11 +20,14 @@
 #define YELLOW  0xFFE0
 #define WHITE   0xFFFF
 
+//pinos analógicos
 #define YP A2  
 #define XM A3 
+//pinos digitais
 #define YM 8   
 #define XP 9   
 
+//uso de livrarias
 TouchScreen ts = TouchScreen(XP, YP, XM, YM, 400);
 Elegoo_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
 
@@ -31,6 +37,7 @@ Elegoo_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
 int x = 0;
 int rturn = 0;
 
+//definição das instâncias jogador 1 e 2
 int a;
 int ab;
 int b;
@@ -52,11 +59,13 @@ int ib;
 
 void setup() {
   
+//limpar tela para inicializar o resto
 tft.reset();
 tft.begin(0x9341);
 tft.fillScreen(BLACK);
 tft.setRotation(1);
 
+//inicializar
 Serial.begin(9600);
 
 tft.setCursor(60, 110);
@@ -99,9 +108,9 @@ tft.drawLine(30, 160, 290, 160, WHITE);
 
 void loop() {
   
-returning:
+returning: //usado para recomeçar o jogo
 
-if(rturn==1){
+if(rturn==1){ //se rturn==1, resetar
 tft.fillScreen(BLACK);
 tft.drawLine(113, 10, 113, 230, WHITE);
 tft.drawLine(208, 10, 208, 230, WHITE);
@@ -111,6 +120,7 @@ tft.drawLine(30, 160, 290, 160, WHITE);
 rturn = 0;
 x = 0;
  
+ //resetar instâncias jogador
  a = 0;
  ab = 0;
  b = 0;
@@ -133,24 +143,25 @@ x = 0;
   
   
 digitalWrite(13, HIGH);
- TSPoint p = ts.getPoint();
+ TSPoint p = ts.getPoint();	//TSPointp=ts.getPoint(); stores the length (x), width (y) and compression (z) in the p object.
  digitalWrite(13, LOW);
  
- if (p.z > ts.pressureThreshhold) {
+ if (p.z > ts.pressureThreshhold) { //se tela for apertada
     
 pinMode(XM, OUTPUT);
 pinMode(YP, OUTPUT);
   
-   if(p.y < 380){
+   if(p.y < 380){ //?
     
-    if(p.x < 400){
-        if(x==0){
+    if(p.x < 400){ //?
+	
+        if(x==0){ //se for vez do jogador 1
         tft.fillCircle(70, 45, 25, BLUE);
         x=x+1;
         a = 1;
         delay(10);
         }
-        else if(x==1){
+        else if(x==1){ //se não, se for vez do jogador 2
         tft.fillCircle(70, 45, 25, RED);
         x=x-1;
         ab = 1;
@@ -160,14 +171,15 @@ pinMode(YP, OUTPUT);
       
     
 
- else if(p.x < 650 && p.x > 400){
-        if(x==0){
+ else if(p.x < 650 && p.x > 400){ //?
+ 
+        if(x==0){ //se vez jogador 1
         tft.fillCircle(160, 45, 25, BLUE);
         x=x+1;
         b = 1;
         delay(10);
         }
-        else if(x==1){
+        else if(x==1){ //se vez jogador 2
         tft.fillCircle(160, 45, 25, RED);
         x=x-1;
         bb = 1;
@@ -178,14 +190,15 @@ pinMode(YP, OUTPUT);
       
     
 
-  else if(p.x > 650){
-        if(x==0){
+  else if(p.x > 650){ //?
+  
+        if(x==0){ //se jogador 1
         tft.fillCircle(250, 45, 25, BLUE);
         x=x+1;
         c = 1;
         delay(10);
         }
-        else if(x==1){
+        else if(x==1){ //se jogador 2
         tft.fillCircle(250, 45, 25, RED);
         x=x-1;
         cb = 1;
@@ -197,16 +210,17 @@ pinMode(YP, OUTPUT);
    
  
  
-  else if(p.y > 380 && p.y < 650){
+  else if(p.y > 380 && p.y < 650){ //?
   
-   if(p.x < 400){     
-        if(x==0){
+   if(p.x < 400){ //?
+   
+        if(x==0){ //se jogador 1
         tft.fillCircle(70, 120, 25, BLUE);
         x=x+1;
         d = 1;
         delay(10);
         }
-        else if(x==1){
+        else if(x==1){ //se jogador 2
         tft.fillCircle(70, 120, 25, RED);
         x=x-1;
         db = 1;
@@ -216,7 +230,7 @@ pinMode(YP, OUTPUT);
       }
 
       
-     else if(p.x < 650 && p.x > 400){
+     else if(p.x < 650 && p.x > 400){ //?
         if(x==0){
         tft.fillCircle(160, 120, 25, BLUE);
         x=x+1;
@@ -233,7 +247,7 @@ pinMode(YP, OUTPUT);
         }
       
 
-       else if(p.x > 650){
+       else if(p.x > 650){ //?
         if(x==0){
         tft.fillCircle(250, 120, 25, BLUE);
         x=x+1;
@@ -252,7 +266,7 @@ pinMode(YP, OUTPUT);
  }
 
 
-  else if(p.y > 650){
+  else if(p.y > 650){ //?
 
  if(p.x < 400){     
         if(x==0){
@@ -271,7 +285,7 @@ pinMode(YP, OUTPUT);
       }
 
       
-     else if(p.x < 650 && p.x > 400){
+     else if(p.x < 650 && p.x > 400){ //?
         if(x==0){
         tft.fillCircle(160, 195, 25, BLUE);
         x=x+1;
@@ -288,7 +302,7 @@ pinMode(YP, OUTPUT);
         }
       
 
-       else if(p.x > 650){
+       else if(p.x > 650){ //?
         if(x==0){
         tft.fillCircle(250, 195, 25, BLUE);
         x=x+1;
@@ -307,8 +321,9 @@ pinMode(YP, OUTPUT);
  }
 
  delay(500);
-
- if(a==1 && b==1 && c==1){
+ 
+//definição de todas as condições de vitória
+ if(a==1 && b==1 && c==1){ 
 tft.fillScreen(BLACK);
 tft.setCursor(80, 110);
 tft.setTextColor(YELLOW);
@@ -341,11 +356,11 @@ tft.setCursor(100, 140);
 tft.println("Loading...");
 delay(800);
 rturn = 1;
-goto returning;
+goto returning; 
 
  
     } 
-    if(d==1 && e==1 && f==1){
+    if(d==1 && e==1 && f==1){ 
 tft.fillScreen(BLACK);
 tft.setCursor(80, 110);
 tft.setTextColor(YELLOW);
@@ -378,7 +393,7 @@ tft.setCursor(100, 140);
 tft.println("Loading...");
 delay(800);
 rturn = 1;
-goto returning;
+goto returning; 
     } 
 if(g==1 && h==1 && i==1){
   tft.fillScreen(BLACK);
@@ -413,7 +428,7 @@ tft.setCursor(100, 140);
 tft.println("Loading...");
 delay(800);
 rturn = 1;
-goto returning;
+goto returning; 
     } 
 
 if(a==1 && d==1 && g==1){
@@ -449,7 +464,7 @@ tft.setCursor(100, 140);
 tft.println("Loading...");
 delay(800);
 rturn = 1;
-goto returning;
+goto returning; 
     } 
 if(b==1 && e==1 && h==1){
   tft.fillScreen(BLACK);
@@ -484,7 +499,7 @@ tft.setCursor(100, 140);
 tft.println("Loading...");
 delay(800);
 rturn = 1;
-goto returning;
+goto returning; 
     } 
 if(c==1 && f==1 && i==1){
 tft.fillScreen(BLACK);
@@ -625,7 +640,7 @@ tft.setCursor(100, 140);
 tft.println("Loading...");
 delay(800);
 rturn = 1;
-goto returning;
+goto returning; 
  }
   if(db==1 && eb==1 && fb==1){
    tft.fillScreen(BLACK);
@@ -877,7 +892,7 @@ rturn = 1;
 goto returning;
  }
 
-
+//definição das condições de empate
  if(a||ab==1){
   if(b||bb==1){
     if(c||cb==1){
