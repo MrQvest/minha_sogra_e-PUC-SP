@@ -19,7 +19,7 @@ void setup(void) {
  Serial.begin(9600);
 }
 void loop(void) {
- TSPoint p = ts.getPoint();
+ TSPoint p = ts.getPoint(); //TSPointp=ts.getPoint(); stores the length (x), width (y) and compression (z) in the p object.
  if (p.z > ts.pressureThreshhold) {
     Serial.print("X = "); Serial.print(p.x);
     Serial.print("\tY = "); Serial.print(p.y);
